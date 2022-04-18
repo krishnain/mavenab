@@ -1,21 +1,28 @@
+@Library('newlibraries')_
 pipeline
 {
     agent any
     stages
     {
-        stage('ContinuousDownload_Loans')
+        stage('Continuous Download Loans')
         {
             steps
             {
-                git 'https://github.com/krishnain/mavenab.git'
+               script
+               {
+                  cicd.newGit("https://github.com/krishnain/mavenab.git")
+               }
             }
         }
-        stage('ContinuousBuild_Loans')
+        stage('ContinuousBuild Loans')
         {
             steps
             {
-                sh 'mvn package'
+                script
+                {
+                    cicd.newMaven()
+                }
             }
         }
-    }
+   } 
 }
