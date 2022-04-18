@@ -1,44 +1,64 @@
+@Library('newlibraries')_
 pipeline
 {
     agent any
     stages
     {
-        stage('ContinuousDownload_Master')
+        stage('Continuous Download')
         {
             steps
             {
-                git 'https://github.com/krishnain/mavenab.git'
+               script
+               {
+                  cicd.newGit("https://github.com/krishnain/mavenab.git")
+               }
             }
         }
-        stage('ContinuousBuild_Master')
+        stage('ContinuousBuild')
         {
             steps
             {
-                sh 'mvn package'
+                script
+                {
+                    cicd.newMaven()
+                }
             }
         }
-        stage('ContinuousDeployment_Master')
+        stage('ContinuousDeploy')
         {
             steps
             {
-deploy adapters: [tomcat9(credentialsId: '898c13c4-28fd-4283-82d8-c07f78f8a5e8', path: '', url: 'http://172.31.6.79:8080')], contextPath: 'testapp', war: '**/*.war'
-	}
-        }
-        stage('ContinuousTesting_Master')
-        {
-            steps
-            {
-                git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-                sh 'java -jar /home/ubuntu/.jenkins/workspace/MultiBranchPipeline1_master/testing.jar'
+                script
+                {
+                    cicd.newDeploy("http://172.31.6.79:8080","testapp")
+                }
             }
         }
-        stage('ContinuousDelivery_Master')
+        stage('ContinuousTesting')
         {
             steps
             {
-            deploy adapters: [tomcat9(credentialsId: '898c13c4-28fd-4283-82d8-c07f78f8a5e8', path: '', url: 'http://172.31.7.39:8080')], contextPath: 'prodapp', war: '**/*.war'
-
-	    }
+                script
+                {
+                    cicd.newGit("https://github.com/intelliqittrainings/FunctionalTesting.git")
+                    cicd.newTest("DeclarativePipelinewithSharedLibrarires")
+                }
+            }
         }
+        stage('ContinuousDelivery')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.newDeploy("http://172.31.7.39:8080","prodapp")
+                }
+            }
+        }
+        
+        
+        
+        
+        
     }
 }
