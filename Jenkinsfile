@@ -29,7 +29,7 @@ deploy adapters: [tomcat9(credentialsId: '898c13c4-28fd-4283-82d8-c07f78f8a5e8',
             steps
             {
                 git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-                sh 'java -jar /home/ubuntu/.jenkins/workspace/DeclarativePipeline1/testing.jar'
+                sh 'java -jar /home/ubuntu/.jenkins/workspace/MultiBranchPipeline1_master/testing.jar'
             }
         }
         stage('ContinuousDelivery_Master')
