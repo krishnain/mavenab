@@ -36,8 +36,9 @@ deploy adapters: [tomcat9(credentialsId: '898c13c4-28fd-4283-82d8-c07f78f8a5e8',
         {
             steps
             {
-                deploy adapters: [tomcat9(credentialsId: '376e01e8-e628-40d2-aaec-6452f707a3ff', path: '', url: 'http://172.31.21.226:8080')], contextPath: 'myprodapp', war: '**/*.war'
-            }
+            deploy adapters: [tomcat9(credentialsId: '898c13c4-28fd-4283-82d8-c07f78f8a5e8', path: '', url: 'http://172.31.7.39:8080')], contextPath: 'prodapp', war: '**/*.war'
+
+	    }
         }
     }
 }
